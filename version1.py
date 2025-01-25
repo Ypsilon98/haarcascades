@@ -1,3 +1,9 @@
+# Version 1 als Inspiration
+# !!! Nicht ausführbar !!!
+# !!! Nur als Beispiel für die Implementierung !!!
+
+# app.py
+
 import cv2
 from tkinter import Label, Canvas, Button, filedialog, StringVar, ttk
 from PIL import Image, ImageTk
@@ -166,3 +172,117 @@ class App:
 
         # Nächsten Frame planen
         self.root.after(10, self.update_frame)  # Alle 10 ms ein neuer Frame
+
+
+
+
+# cameramanager.py
+
+import cv2
+
+class CameraManager:
+    def __init__(self):
+        # Initialisiert den Kamera-Manager.
+        self.cap = None
+        self.running = False
+
+    def detect_cameras(self):
+    # Erkennt verfügbare Kameras und gibt eine Liste der Indizes zurück.
+        available_cameras = []
+        for i in range(3):  # Teste nur die ersten 3 Kameras
+            cap = cv2.VideoCapture(i)
+            if cap.isOpened():
+                available_cameras.append(i)
+                cap.release()
+        return available_cameras
+
+    def start_camera(self, camera_index=0):
+        # Startet die Kamera mit dem angegebenen Index.
+        self.cap = cv2.VideoCapture(camera_index)
+        self.running = self.cap.isOpened()
+        if not self.running:
+            raise Exception(f"Kamera {camera_index} konnte nicht gestartet werden.")
+
+
+    def stop_camera(self):
+        # Stoppt die Kamera und gibt Ressourcen frei.
+        if self.cap:
+            self.cap.release()
+        self.cap = None
+        self.running = False
+
+    def get_frame(self):
+        # Liefert einen Frame von der Kamera.
+        if self.cap is None or not self.cap.isOpened():
+            return False, None
+        ret, frame = self.cap.read()
+        if ret:
+            return ret, frame
+        else:
+            return False, None
+
+
+
+
+
+# classifiermanager.py
+
+import cv2
+from tkinter import filedialog
+
+class ClassifierManager:
+    def __init__(self):
+        # Initialisiert den Klassifizierer-Manager.
+        self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
+    def load_classifier(self):
+        # Lädt eine Haar-Cascade XML-Datei zum Erkennen von Gesichtern.
+        file_path = filedialog.askopenfilename(title="Wähle Haar-Cascade XML-Datei",
+                                               filetypes=(("XML-Dateien", "*.xml"), ("Alle Dateien", "*.*")))
+        if file_path:
+            self.face_cascade = cv2.CascadeClassifier(file_path)
+
+
+    def train_classifier(self):
+        # Trainiert einen benutzerdefinierten Haar-Cascade Klassifizierer.
+        # Beispiel-Logik für das Training eines Klassifizierers:
+        # Du kannst hier den Prozess implementieren, um z. B. Positiv- und Negativbilder zu verarbeiten.
+        file_path = filedialog.askdirectory(title="Wähle Trainingsdatensatz-Ordner")
+        if file_path:
+            # Füge hier Code für das Training mit OpenCV hinzu (z. B. mit cv2.trainCascadeClassifier).
+            print(f"Klassifizierer mit Daten aus {file_path} trainieren...")
+        else:
+            print("Kein Ordner ausgewählt!")
+
+    def detect_faces(self, frame):
+        # Erkennt Gesichter in einem gegebenen Frame.
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        faces = self.face_cascade.detectMultiScale(gray, scaleFactor=1.05, minNeighbors=3, minSize=(30, 30))
+        return faces
+
+
+
+
+# filemanager.py
+
+from tkinter import filedialog
+
+class FileManager:
+    @staticmethod
+    def open_file_dialog(title="Datei auswählen", filetypes=(("Bilder", "*.jpg;*.png;*.jpeg"), ("Alle Dateien", "*.*"))):
+        file_path = filedialog.askopenfilename(title=title, filetypes=filetypes)
+        return file_path
+
+
+
+
+
+# main.py
+
+from tkinter import Tk
+from app import App
+
+if __name__ == "__main__":
+    root = Tk()
+    app = App(root)
+    root.mainloop()
