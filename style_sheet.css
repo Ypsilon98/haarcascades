@@ -1,0 +1,139 @@
+QMainWindow {
+    font-family: 'Segoe UI'; /* Schriftart */
+    font-size: 14px;
+    background-color: white;
+}
+/* Label */
+QLabel {
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    color: black;
+    font-size: 14px;
+}
+
+QLabel[status="display"] {
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+    background-color: #dcdcdc; /* Helles Grau, fast weiss */ 
+    border: 1px solid black; /* Schwarzer Rand */
+}
+
+/* Buttons */
+QPushButton {
+    font-family: 'Segoe UI';
+    font-size: 14px;
+    background-color: #0078D7; /* Microsoft Blue */
+    color: white;
+    border-radius: 5px; /* Rundung der Ecken 5px */
+    padding: 5px; /* Abstand zwischen Text und Rahmen 5px */
+}
+
+QPushButton:hover {
+    background-color: #005a9e; /* Darker Microsoft Blue */
+}
+
+QPushButton:disabled {
+    background-color: gray; 
+}
+
+QPushButton[status="start"] {
+    background-color: green;
+}
+
+QPushButton[status="stop"] {
+    background-color: red;
+}
+
+QPushButton[status="unavailable"] {
+    background-color: gray;
+}
+
+/* Drop-Down-Menu */
+QComboBox {
+    font-family: 'Segoe UI';
+    font-size: 14px;
+    color: black;
+    background-color: white;
+}
+
+/* Menüleiste */
+QMenuBar {
+    color: black;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+QMenuBar::item {
+    color: black;
+    padding: 5px 10px; /* Abstand zwischen Text und Rand */
+    background: transparent;
+}
+QMenuBar::item:selected {
+    background: #dcdcdc;
+    color: #000;
+}
+QMenu {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    color: black;
+}
+QMenu::item:selected {
+    background-color: #dcdcdc;
+    color: black;
+}
+
+/* Pop Up Fenster */
+QMessageBox {
+    font-family: 'Segoe UI';
+    font-size: 14px;
+    background-color: white;
+}
+QMessageBox QLabel {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+/* Statusleiste */
+QStatusBar {  
+    color: black;
+    background-color: transparent;             
+}
+
+/* Slider */
+QSlider {
+    color: black;
+    background: transparent;
+}
+
+
+/* Laufbahn des Sliders */
+QSlider::groove:horizontal {
+    height: 6px;
+    background: gray;
+}
+
+/* Schieberegler des Sliders */
+QSlider::handle:horizontal {
+    background: #333;
+    border: 1px solid black;
+    width: 14px;
+    height: 14px;
+    margin: -4px 0; /* Zentrierung des Schiebereglers */
+    border-radius: 7px;
+}
+
+/* Farbe der Laufbahn vor Schieberegler */
+QSlider::sub-page:horizontal:enabled {
+    background: #0078D7; /* Microsoft Blue */
+}
+
+/* Farbe der Laufbahn vor Schieberegler wenn deaktiviert*/
+QSlider::sub-page:horizontal:disabled {
+    background: gray; 
+}
+
+/* Farbe der Laufbahn nach Schieberegler */
+QSlider::add-page:horizontal {
+    background: gray;
+}
